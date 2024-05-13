@@ -26,10 +26,8 @@ public class PatientController {
     @GetMapping
     public ResponseEntity<List<Patient>> getAll(){
         List<Patient> patients = patientService.findAll();
-        if (!patients.isEmpty()){
-            return ResponseEntity.ok(patients);
-        }
-        logger.warn("Empty patient list - communication error ?");
+        if (!patients.isEmpty()) return ResponseEntity.ok(patients);
+        logger.warn("[ERROR] No patients found.");
         return ResponseEntity.internalServerError().build();
     }
 
