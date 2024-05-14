@@ -29,4 +29,5 @@ public class PatientService {
     public void deleteById(Long id) {
         patientRepository.deleteById(id);
     }
+
 }
