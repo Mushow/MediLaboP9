@@ -1,8 +1,8 @@
 package uk.mushow.medilabo.model;
 
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,12 +25,13 @@ public class Patient {
     @NotBlank
     private String surname;
 
-    @NotBlank
-    @Column(name = "birth_date")
+    @NotNull
+    @Column(name = "birth_date", nullable = false)
     private Date birthDate;
 
-    @NotBlank
-    private char gender;
+    @NotNull
+    @Column(name = "gender", nullable = false)
+    private Character gender;
 
     @Column(name = "phone_number")
     private String phoneNumber;
