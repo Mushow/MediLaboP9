@@ -38,7 +38,7 @@ public class PatientController {
     public ResponseEntity<Patient> getPatientById(@PathVariable Long id) {
         Optional<Patient> optionalPatient = patientService.findById(id);
         if (optionalPatient.isPresent()) return ResponseEntity.ok(optionalPatient.get());
-        logger.info("[INFO] Entity not found");
+        logger.info("[INFO] Patient not found");
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
@@ -55,7 +55,7 @@ public class PatientController {
             logger.info("[INFO] Updating patient");
             return ResponseEntity.ok(patientService.save(patient));
         }
-        logger.info("[INFO] Entity not found");
+        logger.info("[INFO] Patient not found");
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
