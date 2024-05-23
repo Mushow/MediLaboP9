@@ -1,0 +1,27 @@
+server:
+  port:
+    10001
+
+spring:
+  main:
+    web-application-type:
+      reactive
+  cloud:
+    gateway:
+      routes:
+        - id: patient_info
+          uri: http://localhost:10002/
+          predicates:
+            - Path=/patients/**
+        - id: patient_note
+          uri: http://localhost:10003/
+          predicates:
+            - Path=/note/**
+        - id: patient_risk
+          uri: http://localhost:10004/
+          predicates:
+            - Path=/risk/**
+        - id: front_end
+          uri: http://localhost:10005/
+          predicates:
+            - Path=/**, /login/**, /manage/**
