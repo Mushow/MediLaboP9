@@ -1,3 +1,16 @@
 package uk.mushow.risk.model;
 
-public record NotePatient (Long noteId, Long patientId , String note) {}
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
+@Data
+@Getter
+@Setter
+public class NotePatient {
+
+    private Long noteId;
+    private Long patientId;
+    private String note;
+
+}
