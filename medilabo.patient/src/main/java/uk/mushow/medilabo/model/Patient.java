@@ -31,7 +31,7 @@ public class Patient {
 
     @NotNull
     @Column(name = "gender", nullable = false)
-    private Character gender;
+    private String gender;
 
     @Column(name = "phone_number")
     private String phoneNumber;
