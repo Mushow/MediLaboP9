@@ -18,6 +18,6 @@ public class NotePatient {
     @Id
     private Long noteId;
     private Long patientId;
-    private List<Note> listNote = new ArrayList<>();
+    private String note;
 
 }
