@@ -7,7 +7,7 @@ import uk.mushow.client.dtos.patients.PatientDTO;
 
 import java.util.List;
 
-@FeignClient(name = "gateway", url = "${gateway.url}")
+@FeignClient(name = "gateway", url = "${gateway}")
 public interface WebProxy {
 
     @GetMapping(value = "/note/patient/{id}")
@@ -45,6 +45,8 @@ public interface WebProxy {
     @DeleteMapping("/patients/{id}")
     void deletePatientById(@PathVariable("id") Long id);
 
+    @PostMapping("/patients")
+    void savePatient(PatientDTO patientDto);
 
 
     @GetMapping("{patientId}/{gender}/{age}")
