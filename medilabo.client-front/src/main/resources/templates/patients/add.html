@@ -7,7 +7,7 @@
 </head>
 
 <body class="bg-gray-100">
-<div th:replace="/nav/nav :: navbar"></div> <!-- Include the navbar fragment here -->
+<div th:replace="~{nav/nav :: navbar}"></div>
 
 <div class="container mx-auto px-4 py-8">
     <div class="bg-white shadow-lg rounded-lg p-8">
@@ -45,7 +45,6 @@
                 <label for="gender" class="block text-lg font-medium text-gray-700">Gender</label>
                 <select th:field="*{gender}" id="gender"
                         class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2">
-                    <option value="">Select a gender</option>
                     <option value="M">Male</option>
                     <option value="F">Female</option>
                 </select>
