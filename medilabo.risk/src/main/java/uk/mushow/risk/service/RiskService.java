@@ -14,12 +14,14 @@ public class RiskService {
     private final WebClient webClient;
 
     public RiskService() {
-        this.webClient = WebClient.builder().baseUrl("http://localhost:10003").build();
+        this.webClient = WebClient.builder().baseUrl("http://localhost:10003")
+                .defaultHeaders(headers -> headers.setBasicAuth("root", "rootroot"))
+                .build();
     }
 
     private List<NotePatient> getPatientNotes(String patientId) {
         return webClient.get()
-                .uri("/notes/{patientId}", patientId)
+                .uri("/note/patient/{patientId}", patientId)
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<List<NotePatient>>() {})
                 .block();
