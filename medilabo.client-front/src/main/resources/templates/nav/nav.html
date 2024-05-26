@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+<div th:fragment="navbar">
+    <nav class="bg-gray-800 p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="/" class="text-white text-2xl font-bold">MediLabo</a>
+            <div>
+                <a href="/login" class="text-gray-300 hover:text-white mx-2">Log in</a>
+                <a href="/logout" class="text-gray-300 hover:text-white mx-2">Log out</a>
+            </div>
+        </div>
+    </nav>
+</div>
+</body>
+</html>
