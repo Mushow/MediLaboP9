@@ -24,8 +24,9 @@ public class RiskLevelAnalyser {
     public static String getRiskLevel(List<NotePatient> notes, String gender, String age) {
         int triggerCount = (int) notes.stream()
                 .map(NotePatient::getNote)
-                .filter(triggers::contains)
+                .flatMap(note -> triggers.stream().filter(note::contains))
                 .count();
+
         int ageInt = Integer.parseInt(age);
 
         if (triggerCount == 0) {
