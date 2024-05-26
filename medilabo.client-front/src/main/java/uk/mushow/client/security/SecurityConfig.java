@@ -7,13 +7,10 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
-import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.core.userdetails.MapReactiveUserDetailsService;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.server.SecurityWebFilterChain;
 
 @Configuration
 @EnableWebFluxSecurity
@@ -27,8 +24,7 @@ public class SecurityConfig {
     SecurityFilterChain securityWebFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable);
         http.authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/**").hasRole("ADMIN");
-                    auth.anyRequest().authenticated();
+                    auth.anyRequest().permitAll();
                 }).formLogin(form ->
                         form.loginProcessingUrl("/login").defaultSuccessUrl("/patient", true))
                 .httpBasic(Customizer.withDefaults());
