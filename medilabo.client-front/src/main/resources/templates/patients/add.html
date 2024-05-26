@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add a patient</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100">
+<div th:replace="/nav/nav :: navbar"></div> <!-- Include the navbar fragment here -->
+
+<div class="container mx-auto px-4 py-8">
+    <div class="bg-white shadow-lg rounded-lg p-8">
+        <h2 class="text-3xl font-bold mb-6 text-gray-800">Add New Patient</h2>
+        <form action="#" th:action="@{/patient/validate}" th:object="${patient}" method="post" class="space-y-6">
+            <div>
+                <label for="name" class="block text-lg font-medium text-gray-700">First Name</label>
+                <input type="text" th:field="*{name}" id="name" placeholder="First name"
+                       class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2">
+                <p class="text-red-500 text-sm mt-1" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+            </div>
+
+            <div>
+                <label for="surname" class="block text-lg font-medium text-gray-700">Last Name</label>
+                <input type="text" th:field="*{surname}" id="surname" placeholder="Last Name"
+                       class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2">
+                <p class="text-red-500 text-sm mt-1" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></p>
+            </div>
+
+            <div>
+                <label for="dateOfBirth" class="block text-lg font-medium text-gray-700">Date of Birth</label>
+                <input type="date" th:field="*{birthDate}" id="dateOfBirth"
+                       class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2">
+                <p class="text-red-500 text-sm mt-1" th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"></p>
+            </div>
+
+            <div>
+                <label for="address" class="block text-lg font-medium text-gray-700">Address</label>
+                <input type="text" th:field="*{address}" id="address"
+                       class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2">
+                <p class="text-red-500 text-sm mt-1" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></p>
+            </div>
+
+            <div>
+                <label for="gender" class="block text-lg font-medium text-gray-700">Gender</label>
+                <select th:field="*{gender}" id="gender"
+                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2">
+                    <option value="">Select a gender</option>
+                    <option value="M">Male</option>
+                    <option value="F">Female</option>
+                </select>
+                <p class="text-red-500 text-sm mt-1" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></p>
+            </div>
+
+            <div>
+                <label for="phoneNumber" class="block text-lg font-medium text-gray-700">Phone Number</label>
+                <input type="tel" th:field="*{phoneNumber}" id="phoneNumber" placeholder="Phone number"
+                       class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2">
+                <p class="text-red-500 text-sm mt-1" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></p>
+            </div>
+
+            <div class="flex justify-between mt-6">
+                <a class="btn bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600" href="/patient">Cancel</a>
+                <input class="btn bg-indigo-500 text-white py-2 px-4 rounded hover:bg-indigo-600 cursor-pointer" type="submit" value="Add Patient">
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
