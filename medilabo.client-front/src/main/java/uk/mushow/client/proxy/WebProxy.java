@@ -45,6 +45,8 @@ public interface WebProxy {
     @DeleteMapping("/patients/{id}")
     void deletePatientById(@PathVariable("id") Long id);
 
+
+
     @GetMapping("{patientId}/{gender}/{age}")
     String getRisk(@PathVariable("patientId") Long patient, @PathVariable String gender, @PathVariable String age);
 
