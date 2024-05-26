@@ -4,12 +4,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.core.userdetails.MapReactiveUserDetailsService;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 
 @Configuration
@@ -21,14 +24,13 @@ public class SecurityConfig {
     String password;
 
     @Bean
-    SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http){
-        http.csrf(ServerHttpSecurity.CsrfSpec::disable);
-        http
-                .authorizeExchange(exchanges -> {exchanges
-                        .pathMatchers("/**")
-                        .hasRole("ADMIN");
-                    exchanges.anyExchange().authenticated();}
-                )
+    SecurityFilterChain securityWebFilterChain(HttpSecurity http) throws Exception {
+        http.csrf(AbstractHttpConfigurer::disable);
+        http.authorizeHttpRequests(auth -> {
+                    auth.requestMatchers("/**").hasRole("ADMIN");
+                    auth.anyRequest().authenticated();
+                }).formLogin(form ->
+                        form.loginProcessingUrl("/login").defaultSuccessUrl("/patient", true))
                 .httpBasic(Customizer.withDefaults());
         return http.build();
     }
@@ -37,14 +39,10 @@ public class SecurityConfig {
     public MapReactiveUserDetailsService userDetailsService() {
         UserDetails user = User.builder()
                 .username(username)
-                .password(passwordEncoder().encode( password))
+                .password(password)
                 .roles("ADMIN")
                 .build();
-        return new MapReactiveUserDetailsService(user);
-    }
 
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return new MapReactiveUserDetailsService(user);
     }
 }
