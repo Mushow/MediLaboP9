@@ -1,6 +1,6 @@
 package uk.mushow.client.dtos.notes;
 
-public class NotePatient {
+public class NotePatientDTO {
 
     private Long noteId;
     private Long patientId;
