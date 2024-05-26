@@ -15,7 +15,7 @@ public class PatientDTO {
     private Long id;
     private String name;
     private String surname;
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthDate;
     private String gender;
     private String phoneNumber;
