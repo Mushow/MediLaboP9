@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import uk.mushow.client.dtos.patients.PatientDTO;
 import uk.mushow.client.proxy.WebProxy;
@@ -19,10 +20,16 @@ public class PatientController {
         this.proxy = proxy;
     }
 
-    @GetMapping("/patient/add")
+    @GetMapping("/organizer/add")
     public String showSavePatientForm(Model model) {
         model.addAttribute("patient", new PatientDTO());
-        return "patients/add";
+        return "patients/organizer_add";
+    }
+
+    @GetMapping("/organizer/edit/{id}")
+    public String showEditPatientForm(Model model, @PathVariable String id) {
+        model.addAttribute("patient", proxy.getPatientById(Long.parseLong(id)));
+        return "patients/organizer_edit";
     }
 
     @PostMapping("/patient/validate")
@@ -32,10 +39,10 @@ public class PatientController {
         }
         if (!result.hasErrors()) {
             proxy.savePatient(patientDto);
-            return "redirect:/patient";
+            return "redirect:/patients";
         }
         model.addAttribute("patient", patientDto);
-        return "patients/add";
+        return "organizer_add";
     }
 
 }
