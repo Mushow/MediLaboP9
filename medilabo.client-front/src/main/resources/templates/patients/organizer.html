@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Organizer Main Menu</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+
+<body class="bg-gray-100">
+<div th:replace="~{nav/nav :: navbar}"></div>
+
+<div class="container mx-auto px-4 py-8">
+    <div class="bg-white shadow-lg rounded-lg p-8">
+        <h2 class="text-3xl font-bold mb-6 text-gray-800">Organizer Main Menu</h2>
+
+        <div class="flex justify-end mb-6">
+            <a class="btn bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600" href="/organizer/add">Add New Patient</a>
+        </div>
+
+        <table class="min-w-full divide-y divide-gray-200">
+            <thead>
+            <tr>
+                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Surname</th>
+                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date of Birth</th>
+                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Address</th>
+                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Gender</th>
+                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Phone Number</th>
+                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+            </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+            <tr th:each="patient : ${patients}">
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900" th:text="${patient.name}">Name</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" th:text="${patient.surname}">Surname</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" th:text="${patient.birthDate}">Date of Birth</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" th:text="${patient.address}">Address</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" th:text="${patient.gender}">Gender</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" th:text="${patient.phoneNumber}">Phone Number</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium flex items-center space-x-4">
+                    <a class="text-indigo-500" th:href="@{/organizer/edit/{id}(id=${patient.id})}">
+                        <i class="fas fa-pen"></i>
+                    </a>
+                    <form th:action="@{/organizer/delete/{id}(id=${patient.id})}" method="post" class="inline">
+                        <button type="submit" class="text-red-500">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

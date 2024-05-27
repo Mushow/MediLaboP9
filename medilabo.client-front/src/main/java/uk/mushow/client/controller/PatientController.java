@@ -1,5 +1,6 @@
 package uk.mushow.client.controller;
 
+import feign.FeignException;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import uk.mushow.client.dtos.patients.PatientDTO;
 import uk.mushow.client.proxy.WebProxy;
 
+import java.util.Collections;
+import java.util.List;
+
 @Controller
 public class PatientController {
 
@@ -18,6 +22,18 @@ public class PatientController {
 
     public PatientController(WebProxy proxy) {
         this.proxy = proxy;
+    }
+
+    @GetMapping("/organizer")
+    public String showPatients(Model model) {
+        List<PatientDTO> patients;
+        try {
+            patients = proxy.getAllPatients();
+        } catch (FeignException e) {
+            patients = Collections.emptyList();
+        }
+        model.addAttribute("patients", patients);
+        return "patients/organizer";
     }
 
     @GetMapping("/organizer/add")
@@ -30,6 +46,12 @@ public class PatientController {
     public String showEditPatientForm(Model model, @PathVariable String id) {
         model.addAttribute("patient", proxy.getPatientById(Long.parseLong(id)));
         return "patients/organizer_edit";
+    }
+
+    @PostMapping("/organizer/delete/{id}")
+    public String deletePatient(@PathVariable("id") Long id) {
+        proxy.deletePatientById(id);
+        return "redirect:/organizer";
     }
 
     @PostMapping("/organizer/validate")
@@ -58,6 +80,5 @@ public class PatientController {
         model.addAttribute("patient", patientDto);
         return "patients/organizer_edit";
     }
-
 
 }
