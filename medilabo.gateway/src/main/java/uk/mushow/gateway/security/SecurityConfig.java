@@ -37,7 +37,7 @@ public class SecurityConfig {
     public MapReactiveUserDetailsService userDetailsService() {
         UserDetails user = User.builder()
                 .username(username)
-                .password(passwordEncoder().encode( password))
+                .password(passwordEncoder().encode(password))
                 .roles("ADMIN")
                 .build();
         return new MapReactiveUserDetailsService(user);
@@ -47,4 +47,5 @@ public class SecurityConfig {
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 }
