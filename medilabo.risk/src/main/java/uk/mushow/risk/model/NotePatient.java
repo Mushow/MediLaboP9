@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 public class NotePatient {
 
-    private Long noteId;
+    private String noteId;
     private Long patientId;
     private String note;
 
