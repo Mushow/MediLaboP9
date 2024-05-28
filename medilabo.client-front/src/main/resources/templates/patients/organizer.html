@@ -34,7 +34,7 @@
             <tr th:each="patient : ${patients}">
                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900" th:text="${patient.name}">Name</td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" th:text="${patient.surname}">Surname</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" th:text="${patient.birthDate}">Date of Birth</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" th:text="${#dates.format(patient.birthDate, 'E MMM dd yyyy')}">Date of Birth</td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" th:text="${patient.address}">Address</td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" th:text="${patient.gender}">Gender</td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" th:text="${patient.phoneNumber}">Phone Number</td>

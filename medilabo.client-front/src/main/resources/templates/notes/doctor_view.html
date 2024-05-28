@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>View Notes</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 
 <body class="bg-gray-100">
@@ -30,10 +31,13 @@
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900" th:text="${riskLevel}">Risk Level</td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" th:text="${note.note}">Note</td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium flex items-center space-x-4">
-                        <a class="text-indigo-600 hover:text-indigo-900" th:href="@{/doctor/edit-notes/{patientId}/{noteId}(patientId=${note.patientId}, noteId=${note.noteId})}">Edit</a>
+                        <a class="text-indigo-600 hover:text-indigo-900" th:href="@{/doctor/edit-notes/{patientId}/{noteId}(patientId=${note.patientId}, noteId=${note.noteId})}">
+                            <i class="fas fa-pen"></i>
+                        </a>
                         <form th:action="@{/doctor/delete-notes/{patientId}/{noteId}(patientId=${note.patientId}, noteId=${note.noteId})}" method="post" class="inline">
-                            <input type="hidden" name="_method" value="delete"/>
-                            <button type="submit" class="text-red-600 hover:text-red-900">Delete</button>
+                            <button type="submit" class="text-red-500">
+                                <i class="fas fa-trash"></i>
+                            </button>
                         </form>
                     </td>
                 </tr>
