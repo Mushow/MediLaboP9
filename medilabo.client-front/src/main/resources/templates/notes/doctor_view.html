@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Notes</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100">
+<div th:replace="~{nav/nav :: navbar}"></div>
+
+<div class="container mx-auto px-4 py-8">
+    <div class="bg-white shadow-lg rounded-lg p-8">
+        <h2 class="text-3xl font-bold mb-6 text-gray-800">View Notes</h2>
+
+        <div th:if="${#lists.isEmpty(notes)}">
+            <p class="text-gray-500">No notes found for this patient.</p>
+        </div>
+        <div th:unless="${#lists.isEmpty(notes)}">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead>
+                <tr>
+                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Note ID</th>
+                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Note</th>
+                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                <tr th:each="note : ${notes}">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900" th:text="${note.noteId}">Note ID</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" th:text="${note.note}">Note</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium flex items-center space-x-4">
+                        <a class="text-indigo-600 hover:text-indigo-900" th:href="@{/doctor/edit-notes/{patientId}/{noteId}(patientId=${note.patientId}, noteId=${note.noteId})}">Edit</a>
+                        <form th:action="@{/doctor/delete-notes/{patientId}/{noteId}(patientId=${note.patientId}, noteId=${note.noteId})}" method="post" class="inline">
+                            <input type="hidden" name="_method" value="delete"/>
+                            <button type="submit" class="text-red-600 hover:text-red-900">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
