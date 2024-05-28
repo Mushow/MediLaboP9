@@ -11,7 +11,7 @@
 
 <div class="container mx-auto px-4 py-8">
     <div class="bg-white shadow-lg rounded-lg p-8">
-        <h2 class="text-3xl font-bold mb-6 text-gray-800">Add New Patient</h2>
+        <h2 class="text-3xl font-bold mb-6 text-gray-800">Edit Patient</h2>
         <form action="#" th:action="@{/organizer/update/{id}(id=${patient.id})}" th:object="${patient}" method="post" class="space-y-6">
             <div>
                 <label for="name" class="block text-lg font-medium text-gray-700">First Name</label>
