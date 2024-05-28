@@ -55,6 +55,8 @@ public class NoteController {
         } catch (Exception e) {
             notes = Collections.emptyList();
         }
+        PatientDTO patient = webProxy.getPatientById(id);
+        model.addAttribute("riskLevel" , webProxy.getHealthRisk(id, patient.getGender(), patient.getAge()));
         model.addAttribute("patientId", id);
         model.addAttribute("notes", notes);
         return "notes/doctor_view";
