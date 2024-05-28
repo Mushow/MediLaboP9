@@ -87,8 +87,8 @@ public class NoteController {
         return "redirect:/doctor";
     }
 
-    @PostMapping("/doctor/delete-notes/{id}")
-    public String deleteNotes(@PathVariable String id) {
+    @PostMapping("/doctor/delete-notes/{patientId}/{id}")
+    public String deleteNotes(@PathVariable String id, @PathVariable String patientId) {
         webProxy.deleteNoteById(id);
         return "redirect:/doctor";
     }
