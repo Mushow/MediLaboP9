@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Note</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100">
+<div th:replace="~{nav/nav :: navbar}"></div>
+
+<div class="container mx-auto px-4 py-8">
+    <div class="bg-white shadow-lg rounded-lg p-8">
+        <h2 class="text-3xl font-bold mb-6 text-gray-800">Add Note</h2>
+        <form th:action="@{/doctor/add-notes/{id}(id=${notePatient.patientId})}" th:object="${notePatient}" method="post" class="space-y-6">
+            <div>
+                <label for="note" class="block text-lg font-medium text-gray-700">Note</label>
+                <textarea th:field="*{note}" id="note" placeholder="Enter note here"
+                          class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2"></textarea>
+                <p class="text-red-500 text-sm mt-1" th:if="${#fields.hasErrors('note')}" th:errors="*{note}"></p>
+            </div>
+
+            <div class="flex justify-between mt-6">
+                <a class="btn bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600" href="/doctor">Cancel</a>
+                <input class="btn bg-indigo-500 text-white py-2 px-4 rounded hover:bg-indigo-600 cursor-pointer" type="submit" value="Save Note">
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
