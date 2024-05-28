@@ -22,7 +22,7 @@ public class NoteController {
     }
 
     @GetMapping("/note/{id}")
-    public ResponseEntity<NotePatient> getNoteById(@PathVariable("id") Long id) {
+    public ResponseEntity<NotePatient> getNoteById(@PathVariable("id") String id) {
         return ResponseEntity.status(HttpStatus.OK).body(noteService.getNoteById(id));
     }
 
@@ -39,7 +39,7 @@ public class NoteController {
     }
 
     @DeleteMapping("/note/{id}")
-    public ResponseEntity<NotePatient> deleteNoteById(@PathVariable("id") Long id) {
+    public ResponseEntity<NotePatient> deleteNoteById(@PathVariable("id") String id) {
         noteService.deleteNoteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

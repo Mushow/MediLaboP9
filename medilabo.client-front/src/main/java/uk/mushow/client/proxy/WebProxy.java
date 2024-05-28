@@ -23,7 +23,7 @@ public interface WebProxy {
     void updateNote(@RequestBody NotePatientDTO note);
 
     @DeleteMapping(value = "/note/{id}")
-    void deleteNoteById(@PathVariable("id") Long id);
+    void deleteNoteById(@PathVariable("id") String id);
 
     @DeleteMapping(value = "/note/patient/{id}")
     void deleteNoteByPatientId(@PathVariable("id") Long patientId);

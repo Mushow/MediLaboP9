@@ -7,7 +7,7 @@ import uk.mushow.notes.models.NotePatient;
 import java.util.List;
 
 @Repository
-public interface NoteRepository extends MongoRepository<NotePatient, Long> {
+public interface NoteRepository extends MongoRepository<NotePatient, String> {
 
     List<NotePatient> findByPatientId(Long patientId);
 

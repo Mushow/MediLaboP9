@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class NotePatientDTO {
 
-    private Long noteId;
+    private String noteId;
     private Long patientId;
     private String note;
 

@@ -22,7 +22,7 @@ public class NoteService {
         noteRepository.deleteAll(allPatientsNotes);
     }
 
-    public NotePatient getNoteById (Long id) {
+    public NotePatient getNoteById (String id) {
         return noteRepository.findById(id).get();
     }
 
@@ -34,7 +34,7 @@ public class NoteService {
         noteRepository.save(note);
     }
 
-    public void deleteNoteById(Long id){
+    public void deleteNoteById(String id) {
         noteRepository.deleteById(id);
     }
 
