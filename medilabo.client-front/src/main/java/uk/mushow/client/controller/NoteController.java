@@ -10,9 +10,7 @@ import uk.mushow.client.dtos.notes.NotePatientDTO;
 import uk.mushow.client.dtos.patients.PatientDTO;
 import uk.mushow.client.proxy.WebProxy;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 public class NoteController {
@@ -23,14 +21,21 @@ public class NoteController {
     @GetMapping("/doctor")
     public String showPatients(Model model) {
         List<PatientDTO> patients;
+        Map<Long, String> riskLevels = new HashMap<>();
         try {
             patients = webProxy.getAllPatients();
+            for (PatientDTO patient : patients) {
+                String riskLevel = webProxy.getHealthRisk(patient.getId(), patient.getGender(), patient.getAge());
+                riskLevels.put(patient.getId(), riskLevel);
+            }
         } catch (Exception e) {
             patients = Collections.emptyList();
         }
         model.addAttribute("patients", patients);
+        model.addAttribute("riskLevels", riskLevels);
         return "notes/doctor";
     }
+
 
     @GetMapping("/doctor/add-notes/{id}")
     public String showAddNotesForm(@PathVariable Long id, Model model) {
@@ -56,7 +61,6 @@ public class NoteController {
             notes = Collections.emptyList();
         }
         PatientDTO patient = webProxy.getPatientById(id);
-        model.addAttribute("riskLevel" , webProxy.getHealthRisk(id, patient.getGender(), patient.getAge()));
         model.addAttribute("patientId", id);
         model.addAttribute("notes", notes);
         return "notes/doctor_view";
