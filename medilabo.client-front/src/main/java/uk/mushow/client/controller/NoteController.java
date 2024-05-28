@@ -81,7 +81,7 @@ public class NoteController {
     }
 
     @PostMapping("/doctor/edit-notes/{patientId}/{id}")
-    public String updateNotes(@PathVariable Long patientId, @PathVariable String id, NotePatientDTO note) {
+    public String updateNotes(@PathVariable String id, NotePatientDTO note) {
         note.setNoteId(id);
         webProxy.updateNote(note);
         return "redirect:/doctor";
