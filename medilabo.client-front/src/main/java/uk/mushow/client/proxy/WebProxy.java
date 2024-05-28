@@ -49,7 +49,7 @@ public interface WebProxy {
     void savePatient(PatientDTO patientDto);
 
 
-    @GetMapping("{patientId}/{gender}/{age}")
-    String getRisk(@PathVariable("patientId") Long patient, @PathVariable String gender, @PathVariable String age);
+    @GetMapping("/risk/{patientId}/{gender}/{age}")
+    String getHealthRisk(@PathVariable("patientId") Long patient, @PathVariable String gender, @PathVariable String age);
 
 }
