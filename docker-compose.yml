@@ -1,0 +1,130 @@
+version: '3.9'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootroot
+      MONGO_INITDB_DATABASE: notePatient
+    volumes:
+      - mongo-data:/data/db
+    ports:
+      - '27017:27017'
+    networks:
+      - bridge
+
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootroot
+      MYSQL_DATABASE: patient
+    volumes:
+      - mysql-data:/var/lib/mysql
+    ports:
+      - '3307:3306'
+    networks:
+      - bridge
+
+  gateway:
+    build:
+      context: ./medilabo.gateway
+    container_name: gateway
+    environment:
+      - spring.username=root
+      - spring.password=rootroot
+      - SPRING_CLOUD_GATEWAY_ROUTES[0]_ID=patient_info
+      - SPRING_CLOUD_GATEWAY_ROUTES[0]_URI=http://patient-service:10002
+      - SPRING_CLOUD_GATEWAY_ROUTES[0]_PREDICATES[0]=Path=/patients/**
+      - SPRING_CLOUD_GATEWAY_ROUTES[1]_ID=patient_note
+      - SPRING_CLOUD_GATEWAY_ROUTES[1]_URI=http://note-service:10003
+      - SPRING_CLOUD_GATEWAY_ROUTES[1]_PREDICATES[0]=Path=/note/**
+      - SPRING_CLOUD_GATEWAY_ROUTES[2]_ID=patient_risk
+      - SPRING_CLOUD_GATEWAY_ROUTES[2]_URI=http://risk-service:10004
+      - SPRING_CLOUD_GATEWAY_ROUTES[2]_PREDICATES[0]=Path=/risk/**
+      - SPRING_CLOUD_GATEWAY_ROUTES[3]_ID=client-front-service
+      - SPRING_CLOUD_GATEWAY_ROUTES[3]_URI=http://client-front-service:10005
+      - SPRING_CLOUD_GATEWAY_ROUTES[3]_PREDICATES[0]=Path=/**, /login/**, /manage/**
+    ports:
+      - '10001:10001'
+    depends_on:
+      - patient-service
+      - note-service
+      - risk-service
+      - client-front-service
+    networks:
+      - bridge
+
+  patient-service:
+    build:
+      context: ./medilabo.patient
+    container_name: patient-service
+    environment:
+      - spring.datasource.url=jdbc:mysql://mysql:3306/patient
+      - spring.datasource.username=root
+      - spring.datasource.password=rootroot
+      - spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+      - spring.jpa.hibernate.ddl-auto=update
+      - spring.jpa.show-sql=true
+      - spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
+      - spring.username=root
+      - spring.password=rootroot
+    ports:
+      - '10002:10002'
+    depends_on:
+      - mysql
+    networks:
+      - bridge
+
+  note-service:
+    build:
+      context: ./medilabo.notes
+    container_name: note-service
+    environment:
+      - spring.data.mongodb.host=mongodb
+      - spring.data.mongodb.port=27017
+      - spring.data.mongodb.database=notePatient
+      - spring.username=root
+      - spring.password=rootroot
+    ports:
+      - '10003:10003'
+    depends_on:
+      - mongodb
+    networks:
+      - bridge
+
+  risk-service:
+    build:
+      context: ./medilabo.risk
+    container_name: risk-service
+    environment:
+      - spring.username=root
+      - spring.password=rootroot
+      - baseUrl=http://note-service:10003
+    ports:
+      - '10004:10004'
+    networks:
+      - bridge
+
+  client-front-service:
+    build:
+      context: ./medilabo.client-front
+    container_name: client-front-service
+    environment:
+      - gateway=http://gateway:10001
+      - spring.username=root
+      - spring.password=rootroot
+    ports:
+      - '10005:10005'
+    networks:
+      - bridge
+
+volumes:
+  mongo-data:
+  mysql-data:
+
+networks:
+  bridge:
+    driver: bridge

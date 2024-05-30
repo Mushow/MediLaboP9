@@ -9,7 +9,7 @@
 		<relativePath/>
 	</parent>
 	<groupId>uk.mushow</groupId>
-	<artifactId>medilabo</artifactId>
+	<artifactId>patient</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>medilabo</name>
 	<description>MediLabo OCR P9</description>
