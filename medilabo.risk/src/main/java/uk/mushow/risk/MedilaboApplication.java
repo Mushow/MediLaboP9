@@ -8,11 +8,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class })
 public class MedilaboApplication {
 
-    @Value("${baseUrl")
-    private static String baseUrl;
-
     public static void main(String[] args) {
-        System.out.println(baseUrl);
         SpringApplication.run(MedilaboApplication.class, args);
     }
 

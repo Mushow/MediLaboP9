@@ -12,9 +12,6 @@ import java.util.List;
 @Service
 public class RiskService {
 
-    @Value("${baseUrl}")
-    private String baseUrl;
-
     private final WebClient webClient;
 
     public RiskService() {
