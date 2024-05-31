@@ -57,14 +57,23 @@ public class SecurityConfig {
         public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                             Authentication authentication) throws IOException, ServletException {
             Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
-            String contextPath = request.getContextPath();
 
+            String targetUrl = determineTargetUrl(roles);
+            if (response.isCommitted()) {
+                return;
+            }
+
+            getRedirectStrategy().sendRedirect(request, response, targetUrl);
+        }
+
+        protected String determineTargetUrl(Set<String> roles) {
+            String baseUrl = "http://localhost:10005"; // Replace 10005 with your actual front-end port if different
             if (roles.contains("ROLE_DOCTOR")) {
-                getRedirectStrategy().sendRedirect(request, response, contextPath + "/doctor");
+                return baseUrl + "/doctor";
             } else if (roles.contains("ROLE_ORGANIZER")) {
-                getRedirectStrategy().sendRedirect(request, response, contextPath + "/organizer");
+                return baseUrl + "/organizer";
             } else {
-                super.onAuthenticationSuccess(request, response, authentication);
+                return baseUrl + "/"; // Default redirect if no roles match
             }
         }
     }
@@ -72,11 +81,11 @@ public class SecurityConfig {
     @Bean
     public UserDetailsService users() {
         UserDetails doctor = User.builder()
-                .username(username)
+                .username("doctor")
                 .password(passwordEncoder().encode(password))
                 .roles("DOCTOR").build();
         UserDetails organizer = User.builder()
-                .username(username)
+                .username("organizer")
                 .password(passwordEncoder().encode(password))
                 .roles("ORGANIZER").build();
 
