@@ -55,7 +55,7 @@ public class SecurityConfig {
     public static class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
         @Override
         public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-                                            Authentication authentication) throws IOException, ServletException {
+                                            Authentication authentication) throws IOException {
             Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
 
             String targetUrl = determineTargetUrl(roles);
@@ -67,13 +67,13 @@ public class SecurityConfig {
         }
 
         protected String determineTargetUrl(Set<String> roles) {
-            String baseUrl = "http://localhost:10005"; // Replace 10005 with your actual front-end port if different
+            String baseUrl = "http://localhost:10005";
             if (roles.contains("ROLE_DOCTOR")) {
                 return baseUrl + "/doctor";
             } else if (roles.contains("ROLE_ORGANIZER")) {
                 return baseUrl + "/organizer";
             } else {
-                return baseUrl + "/"; // Default redirect if no roles match
+                return baseUrl + "/";
             }
         }
     }
