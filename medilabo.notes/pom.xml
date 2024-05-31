@@ -11,7 +11,7 @@
 	<groupId>uk.mushow</groupId>
 	<artifactId>notes</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>medilabo</name>
+	<name>notes</name>
 	<description>MediLabo OCR P9</description>
 	<properties>
 		<java.version>17</java.version>
