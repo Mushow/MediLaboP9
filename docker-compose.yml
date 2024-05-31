@@ -9,7 +9,7 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: rootroot
       MONGO_INITDB_DATABASE: notePatient
     volumes:
-      - mongo-data:/data/db
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
     ports:
       - '27017:27017'
     networks:
@@ -83,11 +83,9 @@ services:
       context: ./medilabo.notes
     container_name: note-service
     environment:
-      - spring.data.mongodb.host=mongodb
-      - spring.data.mongodb.port=27017
-      - spring.data.mongodb.database=notePatient
       - spring.username=root
       - spring.password=rootroot
+      - spring.data.mongodb.uri=mongodb://root:rootroot@mongodb:27017/notePatient?authSource=admin
     ports:
       - '10003:10003'
     depends_on:
@@ -102,7 +100,9 @@ services:
     environment:
       - spring.username=root
       - spring.password=rootroot
-      - baseUrl=http://note-service:10003
+      - BASE_URL=http://note-service:10003
+    depends_on:
+      - note-service
     ports:
       - '10004:10004'
     networks:

@@ -57,10 +57,12 @@ public class SecurityConfig {
         public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                             Authentication authentication) throws IOException, ServletException {
             Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
+            String contextPath = request.getContextPath();
+
             if (roles.contains("ROLE_DOCTOR")) {
-                getRedirectStrategy().sendRedirect(request, response, "/doctor");
+                getRedirectStrategy().sendRedirect(request, response, contextPath + "/doctor");
             } else if (roles.contains("ROLE_ORGANIZER")) {
-                getRedirectStrategy().sendRedirect(request, response, "/organizer");
+                getRedirectStrategy().sendRedirect(request, response, contextPath + "/organizer");
             } else {
                 super.onAuthenticationSuccess(request, response, authentication);
             }
@@ -70,11 +72,11 @@ public class SecurityConfig {
     @Bean
     public UserDetailsService users() {
         UserDetails doctor = User.builder()
-                .username("doctor")
+                .username(username)
                 .password(passwordEncoder().encode(password))
                 .roles("DOCTOR").build();
         UserDetails organizer = User.builder()
-                .username("organizer")
+                .username(username)
                 .password(passwordEncoder().encode(password))
                 .roles("ORGANIZER").build();
 
@@ -85,5 +87,4 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 }

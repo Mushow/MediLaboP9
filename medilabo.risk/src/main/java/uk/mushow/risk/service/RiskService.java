@@ -14,8 +14,8 @@ public class RiskService {
 
     private final WebClient webClient;
 
-    public RiskService() {
-        this.webClient = WebClient.builder().baseUrl("http://localhost:10003")
+    public RiskService(@Value("${baseUrl}") String baseUrl) {
+        this.webClient = WebClient.builder().baseUrl(baseUrl)
                 .defaultHeaders(headers -> headers.setBasicAuth("root", "rootroot"))
                 .build();
     }
