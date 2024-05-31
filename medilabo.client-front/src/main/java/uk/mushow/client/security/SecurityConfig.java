@@ -32,6 +32,8 @@ public class SecurityConfig {
     String username;
     @Value("${spring.password}")
     String password;
+    @Value("${server.port}")
+    int port;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -49,10 +51,17 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationSuccessHandler customAuthenticationSuccessHandler() {
-        return new CustomAuthenticationSuccessHandler();
+        return new CustomAuthenticationSuccessHandler(port);
     }
 
     public static class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+
+        private final int port;
+
+        public CustomAuthenticationSuccessHandler(int port) {
+            this.port = port;
+        }
+
         @Override
         public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                             Authentication authentication) throws IOException {
@@ -67,7 +76,7 @@ public class SecurityConfig {
         }
 
         protected String determineTargetUrl(Set<String> roles) {
-            String baseUrl = "http://localhost:10005";
+            String baseUrl = "http://localhost:" + port;
             if (roles.contains("ROLE_DOCTOR")) {
                 return baseUrl + "/doctor";
             } else if (roles.contains("ROLE_ORGANIZER")) {
