@@ -29,10 +29,6 @@ public class RiskLevelAnalyser {
 
         int ageInt = Integer.parseInt(age);
 
-        if (triggerCount == 0) {
-            return RiskLevel.NONE.risk;
-        }
-
         boolean isMale = gender.equals("M");
         boolean isFemale = gender.equals("F");
 
@@ -52,7 +48,7 @@ public class RiskLevelAnalyser {
             return RiskLevel.IN_DANGER.risk;
         }
 
-        return RiskLevel.UNKNOWN.risk;
+        return RiskLevel.NONE.risk;
     }
 
 
