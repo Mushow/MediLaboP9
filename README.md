@@ -10,7 +10,7 @@
 ## Ports used
 Make sure that the necessary ports are available on your machine.
 
-java
+```java
 10001 - Gateway
 10002 - PatientService
 10003 - NoteService
@@ -50,5 +50,3 @@ Common password: `rootroot
 
 - Prefer the use of suitable data structures to minimise memory consumption.
 - Use lightweight libraries and avoid unnecessary dependencies.
-
-Translated with DeepL (https://www.deepl.com/app/?utm_source=ios&utm_medium=app&utm_campaign=share-translation)
