@@ -1,5 +1,5 @@
-# Environnement de développement
-## Prérequis
+# Development environment
+## Prerequisites
 
 - JDK 17
 - Maven
@@ -7,10 +7,10 @@
 - MongoDB
 - Docker
 
-## Ports utilisés
-Assurez-vous que les ports nécessaires sur votre machine sont disponibles.
+## Ports used
+Make sure that the necessary ports are available on your machine.
 
-```java
+java
 10001 - Gateway
 10002 - PatientService
 10003 - NoteService
@@ -20,33 +20,35 @@ Assurez-vous que les ports nécessaires sur votre machine sont disponibles.
 3306 - Default MySQL
 ```
 
-## Démarrage de l'Application
+## Starting the Application
 
-Placez vous dans le dossier racine du projet et exécutez la commande suivante pour démarrer l'application:
+Go to the project root folder and run the following command to start the application:
 
 ```bash
 docker-compose up -d
 ```
 
-## Connexion à l'application
+## Connecting to the application
 
-Différents rôles: `doctor`, `organizer`
-Mot de passe commun: `rootroot`
+Different roles: `doctor`, `organizer`
+Common password: `rootroot
 
-## Recommandations Green Code
+## Green Code recommendations
 
-### 1. Éco-Conception Logicielle
-#### Réutilisabilité et Modularité:
+### 1. Software eco-design
+#### Reusability and Modularity:
 
-- Adopter une architecture modulaire pour permettre la réutilisation des composants et éviter le code redondant.
+- Adopt a modular architecture to allow components to be reused and avoid redundant code.
 
-### 2. Gestion de MongoDB
-#### Indexation:
+### 2. MongoDB management
+#### Indexing:
 
-- Utiliser des index pour optimiser les requêtes de lecture et réduire la charge sur le serveur MongoDB.
-- Surveiller et maintenir les index pour s'assurer qu'ils sont pertinents et performants.
+- Use indexes to optimise read requests and reduce the load on the MongoDB server.
+- Monitor and maintain indexes to ensure they are relevant and efficient.
 
-### 3. Utilisation Efficiente de la Mémoire:
+### 3. Efficient use of memory:
 
-- Préférer l’utilisation de structures de données adaptées pour minimiser la consommation de mémoire.
-- Utiliser des bibliothèques légères et éviter les dépendances inutiles.
+- Prefer the use of suitable data structures to minimise memory consumption.
+- Use lightweight libraries and avoid unnecessary dependencies.
+
+Translated with DeepL (https://www.deepl.com/app/?utm_source=ios&utm_medium=app&utm_campaign=share-translation)
